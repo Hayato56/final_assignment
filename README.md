@@ -1,6 +1,45 @@
 ### 画面遷移図
 Figma：https://www.figma.com/design/C8FbbochTmZUyin776fq0U/%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=0-1&p=f&t=oKErSsbBIjcP9Y43-0
 
+### ER図
+dbdiagram：https://dbdiagram.io/d/698af116bd82f5fce23a4cad
+
+### テーブル詳細
+＜users（ユーザー情報）＞
+name : ユーザーの表示名
+email : ログイン認証用のメールアドレス（ユニーク制約）
+password : ログイン認証用のパスワード
+created_at / updated_at : 作成・更新日時
+
+＜records（レコード基本情報）＞
+title : アルバムのタイトル（APIより取得）
+artist : アーティスト名（APIより取得）
+released_year : リリース年
+catalog_number : カタログ番号（型番）
+genre : ジャンル
+image_url : ジャケット画像のURL
+discogs_id : Discogs API側の一意なID
+user_id : 紐づくユーザーのID（外部キー）
+
+＜collection_items（所有・コンディション情報）＞
+vinyl_condition : 盤質状態（M, NM, VG+など。Rails側でenum管理予定）
+sleeve_condition : ジャケットの状態（enum管理予定）
+has_obi : 帯の有無（boolean型）
+purchased_at_store : 購入場所
+purchased_price : 購入価格
+last_cleaned_on : 最終クリーニング実施日（date型）
+notes : 自由記述のメモ（text型）
+record_id : 紐づくレコードのID（外部キー / 1対1のリレーション）
+
+ER図の注意点（セルフチェック）
+[x] プルリクエストに最新のER図のスクリーンショットを画像が表示される形で掲載できているか？
+[x] テーブル名は複数形（users, records, collection_items）になっているか？
+[x] カラムの型（varchar, integer, boolean, date等）は記載されているか？
+[x] 外部キー（user_id, record_id）は適切に設けられているか？
+[x] リレーションは適切に描かれているか？
+[x] STIは使用しない構成になっているか？
+[x] post_nameのような"テーブル名+カラム名"の命名を避けているか？
+
 ## サービス概要
 自分のレコードコレクションを「自分だけのこだわり」で管理できる、個人コレクター向けのデジタル書庫アプリです。 既存の海外サービスでは入力が煩雑になりがちな「詳細な盤質ステータス」や「クリーニング履歴」などを、スマホから直感的に記録することに特化しています。 Discogs APIとの連携により、最小限の入力で正確な盤データとジャケット画像を取得し、自分だけの美しいライブラリを構築できます。
 
