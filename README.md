@@ -8,15 +8,21 @@ dbdiagram：https://dbdiagram.io/d/698af116bd82f5fce23a4cad
 ＜users（ユーザー情報）＞
 name : ユーザーの表示名
 email : ログイン認証用のメールアドレス（ユニーク制約）
-password : ログイン認証用のパスワード
+encrypted_password : ログイン認証用のパスワード（devise仕様）
 created_at / updated_at : 作成・更新日時
+
+＜artists（アーティスト情報）＞ ※追加
+name : アーティスト名（ユニーク制約）
+
+＜genres（ジャンル情報）＞ ※追加
+name : ジャンル名（ユニーク制約）
 
 ＜records（レコード基本情報）＞
 title : アルバムのタイトル（APIより取得）
-artist : アーティスト名（APIより取得）
+artist_id : 紐づくアーティストのID（外部キー）
+genre_id : 紐づくジャンルのID（外部キー）
 released_year : リリース年
 catalog_number : カタログ番号（型番）
-genre : ジャンル
 image_url : ジャケット画像のURL
 discogs_id : Discogs API側の一意なID
 user_id : 紐づくユーザーのID（外部キー）
