@@ -1,0 +1,56 @@
+<div style="max-width: 1000px; margin: 40px auto; padding: 0 20px;">
+
+  <%# 上部ナビゲーション %>
+  <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+    <%= link_to "← コレクション一覧へ戻る", posts_path, style: "text-decoration: none; color: #666; font-size: 14px;" %>
+    <div style="display: flex; gap: 15px;">
+      <%= link_to "編集する", edit_post_path(@post), style: "text-decoration: none; color: #007bff;" %>
+      <%= button_to "削除", @post, method: :delete,
+          data: { turbo_confirm: t('common.confirm_delete') },
+          style: "background: none; border: none; color: #dc3545; cursor: pointer; padding: 0;" %>
+    </div>
+  </div>
+
+  <div class="show-container">
+    <%# 左側：画像 %>
+    <div class="show-image">
+      <% if @post.image.attached? %>
+        <%= image_tag @post.image %>
+      <% else %>
+        <div style="width: 100%; aspect-ratio: 1/1; background: #eee; display: flex; align-items: center; justify-content: center; color: #999;">
+          No Image
+        </div>
+      <% end %>
+    </div>
+
+    <%# 右側：情報 %>
+    <div class="show-details">
+      <h1 style="font-size: 32px; font-weight: bold; margin-bottom: 10px; line-height: 1.2;">
+        <%= @post.title %>
+      </h1>
+      <p style="font-size: 24px; color: #444; margin-bottom: 30px;">
+        <%= @post.artist %>
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div>
+          <div class="detail-label">Genre</div>
+          <div class="detail-value"><%= @post.genre.presence || "Unknown" %></div>
+        </div>
+        <div>
+          <div class="detail-label">Released</div>
+          <div class="detail-value"><%= @post.release_year.presence || "Unknown" %></div>
+        </div>
+      </div>
+
+      <div class="detail-label" style="margin-top: 20px;">Review / Notes</div>
+      <div class="review-box">
+        <% if @post.body.present? %>
+          <%= simple_format @post.body %>
+        <% else %>
+          <span style="color: #999;">レビューはまだありません。</span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

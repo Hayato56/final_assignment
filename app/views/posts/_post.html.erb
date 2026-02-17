@@ -1,0 +1,31 @@
+<div id="<%= dom_id post %>">
+  <% if post.image.attached? %>
+    <div style="width: 300px; margin-bottom: 20px;">
+      <%= image_tag post.image, style: "width: 100%; height: auto;" %>
+    </div>
+  <% end %>
+  <p>
+    <strong>アーティスト名:</strong>
+    <%= post.artist %>
+  </p>
+
+  <p>
+    <strong>タイトル:</strong>
+    <%= post.title %>
+  </p>
+
+  <p>
+    <strong>リリース年:</strong>
+    <%= post.release_year %>
+  </p>
+
+  <p>
+    <strong>ジャンル:</strong>
+    <%= post.genre %>
+  </p>
+
+  <p>
+    <strong>詳細レビュー:</strong>
+    <%= post.body %>
+  </p>
+</div>
