@@ -1,0 +1,12 @@
+<div style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
+  <div style="margin-bottom: 20px; display: flex; justify-content: space-between;">
+    <%= link_to "← 一覧へ戻る", posts_path, style: "text-decoration: none; color: #666;" %>
+    <%= link_to "詳細を表示する", @post, style: "text-decoration: none; color: #007bff;" %>
+  </div>
+
+  <h1 style="font-size: 24px; font-weight: bold; margin-bottom: 30px;">
+    盤の情報を編集
+  </h1>
+
+  <%= render "form", post: @post %>
+</div>

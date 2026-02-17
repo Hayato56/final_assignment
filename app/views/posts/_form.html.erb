@@ -1,0 +1,104 @@
+<script>
+  window.fetchDiscogsData = async function() {
+    const artist = document.getElementById('post_artist').value;
+    const title = document.getElementById('post_title').value;
+    const status = document.getElementById('fetch-status');
+    const remoteUrlField = document.getElementById('post_remote_image_url');
+
+    if (!artist || !title) {
+      alert('アーティスト名とタイトルを入力してください');
+      return;
+    }
+
+    status.textContent = "Searching...";
+    status.style.color = "#666";
+
+    try {
+      const response = await fetch(`/posts/fetch_discogs?artist=${encodeURIComponent(artist)}&title=${encodeURIComponent(title)}`);
+      const data = await response.json();
+
+      if (data.success) {
+        if (data.year) document.getElementById('post_release_year').value = data.year;
+        if (data.genre) document.getElementById('post_genre').value = data.genre;
+        if (data.image_url) {
+          remoteUrlField.value = data.image_url;
+          status.innerHTML = `取得完了！<br><img src="${data.image_url}" style="width:80px; margin-top:10px; border:1px solid #ddd;">`;
+        }
+        status.style.color = "green";
+      } else {
+        status.textContent = "見つかりませんでした";
+        status.style.color = "red";
+      }
+    } catch (error) {
+      status.textContent = "エラーが発生しました";
+      console.error(error);
+    }
+  };
+</script>
+
+<%= form_with(model: post) do |form| %>
+  <% if post.errors.any? %>
+    <div style="color: #dc3545; background: #fff5f5; padding: 20px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #feb2b2;">
+      <h2 style="font-size: 16px; margin-top: 0;"><%= post.errors.count %> 個のエラーがあります:</h2>
+      <ul style="font-size: 14px; margin-bottom: 0;">
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :remote_image_url, id: "post_remote_image_url" %>
+
+  <div class="form-container">
+    <%# 1. 自動取得セクション %>
+    <div class="fetch-box">
+      <p style="font-size: 12px; margin-top: 0; color: #666; font-weight: bold;">DISCOGS DATABASE API</p>
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <button type="button" onclick="fetchDiscogsData()" class="btn-fetch">
+          Discogsから情報を取得
+        </button>
+        <span id="fetch-status" style="font-size: 12px; font-weight: bold;"></span>
+      </div>
+    </div>
+
+    <%# 2. 入力フィールドセクション %>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div class="form-group">
+        <%= form.label :artist, "アーティスト", class: "form-label" %>
+        <%= form.text_field :artist, class: "form-input", placeholder: "例: Daft Punk" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :title, "アルバムタイトル", class: "form-label" %>
+        <%= form.text_field :title, class: "form-input", placeholder: "例: Discovery" %>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div class="form-group">
+        <%= form.label :release_year, "リリース年", class: "form-label" %>
+        <%= form.number_field :release_year, class: "form-input", placeholder: "2001" %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :genre, "ジャンル", class: "form-label" %>
+        <%= form.select :genre, Post::GENRES, { include_blank: "選択してください" }, { class: "form-input" } %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :image, "ジャケット画像 (手動アップロード)", class: "form-label" %>
+      <%= form.file_field :image, class: "form-input", style: "background: #fdfdfd;" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :body, "レビュー / メモ", class: "form-label" %>
+      <%= form.text_area :body, rows: 6, class: "form-input", placeholder: "この盤についての感想をどうぞ..." %>
+    </div>
+
+    <div style="margin-top: 30px; border-top: 1px solid #eee; pt: 25px;">
+      <%= form.submit class: "btn-primary", style: "width: 100%; padding: 15px; font-size: 16px; cursor: pointer;" %>
+    </div>
+  </div>
+<% end %>
