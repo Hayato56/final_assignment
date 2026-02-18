@@ -43,6 +43,18 @@
         </div>
       </div>
 
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+        <div>
+          <p style="font-size: 12px; color: #666; margin-bottom: 5px; font-weight: bold;">帯の有無</p>
+          <p><%= @post.obi ? "✅ あり" : "❌ なし" %></p>
+        </div>
+
+        <div>
+          <p style="font-size: 12px; color: #666; margin-bottom: 5px; font-weight: bold;">クリーニング履歴</p>
+          <p><%= @post.cleaning_history.presence || "未記録" %></p>
+        </div>
+      </div>
+
       <div class="detail-label" style="margin-top: 20px;">Review / Notes</div>
       <div class="review-box">
         <% if @post.body.present? %>
