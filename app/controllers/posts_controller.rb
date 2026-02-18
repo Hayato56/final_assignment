@@ -111,6 +111,6 @@ class PostsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def post_params
       # :artist, :genre, :release_year を追加して許可します
-      params.require(:post).permit(:title, :body, :artist, :genre, :release_year, :image, :remote_image_url)
+      params.require(:post).permit(:title, :body, :artist, :genre, :release_year, :image, :remote_image_url, :obi, :cleaning_history)
     end
 end

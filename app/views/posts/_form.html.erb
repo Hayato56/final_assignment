@@ -93,6 +93,16 @@
     </div>
 
     <div class="form-group">
+      <%= form.label :obi, "帯の有無", class: "form-label" %>
+      <%= form.check_box :obi, style: "width: 20px; height: 20px;" %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :cleaning_history, "クリーニング履歴", class: "form-label" %>
+      <%= form.text_area :cleaning_history, class: "form-input", rows: 2, placeholder: "2024/02/18 クリーニング液を使用" %>
+    </div>
+
+    <div class="form-group">
       <%= form.label :body, "レビュー / メモ", class: "form-label" %>
       <%= form.text_area :body, rows: 6, class: "form-input", placeholder: "この盤についての感想をどうぞ..." %>
     </div>
