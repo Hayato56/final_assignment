@@ -2,6 +2,7 @@
   "name": "app",
   "private": true,
   "scripts": {
-    "build": "echo 'no build needed'"
+    "build": "echo 'no build needed'",
+    "build:css": "echo 'no css build needed'"
   }
 }
