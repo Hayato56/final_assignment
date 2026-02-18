@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
     has_one_attached :image
+    belongs_to :user
 
     attr_accessor :remote_image_url
 
