@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Myapp</title>
+    <title>MyDiscogsApp</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,6 +11,12 @@
   </head>
 
   <body>
+    <% if notice %>
+      <p class="notice p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="alert p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50"><%= alert %></p>
+    <% end %>
     <main class="container mx-auto mt-28 px-5 flex">
       <%= yield %>
     </main>
