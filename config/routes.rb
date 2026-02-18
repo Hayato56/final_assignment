@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'static_pages/terms'
+  get 'static_pages/privacy'
   devise_for :users
   resources :posts do
     collection do

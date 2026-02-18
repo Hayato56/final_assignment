@@ -1,6 +1,7 @@
 require "open-uri"
 
 class PostsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_post, only: %i[ show edit update destroy ]
 
   # GET /posts or /posts.json
@@ -35,7 +36,7 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.build(post_params)
 
     # 【重要】もしリモート画像URLがあり、かつ手動でファイルが選択されていない場合
     if params[:post][:remote_image_url].present? && !@post.image.attached?
