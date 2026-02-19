@@ -6,9 +6,28 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-
     <%= stylesheet_link_tag "application", media: "all" %>
+    <style>
+      input[type="email"], input[type="password"], input[type="text"], textarea {
+        border: 1px solid #ccc !important;
+        background-color: white !important;
+        color: black !important;
+        padding: 8px;
+        border-radius: 4px;
+        width: 100%;
+        margin-top: 4px;
+        display: block;
+      }
+    </style>
   </head>
+
+  <footer class="mt-20 py-10 border-t border-gray-200 text-center text-sm text-gray-500">
+    <div class="flex justify-center gap-6 mb-4">
+      <%= link_to "利用規約", static_pages_terms_path, class: "hover:underline" %>
+      <%= link_to "プライバシーポリシー", static_pages_privacy_path, class: "hover:underline" %>
+    </div>
+    <p>&copy; 2026 MyDiscogsApp</p>
+  </footer>
 
   <body>
     <nav>
