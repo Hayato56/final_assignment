@@ -6,14 +6,18 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    if user_signed_in?
+      @posts = current_user.posts
+    else
+      @posts = Post.none
+    end
 
     # キーワード検索
     if params[:search].present?
       @posts = @posts.where("artist ILIKE ? OR title ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
     end
 
-    # ジャンル絞り込み (追加)
+    # ジャンル絞り込み
     if params[:genre].present?
       @posts = @posts.where(genre: params[:genre])
     end
@@ -106,7 +110,9 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find(params[:id])
+      @post = current_user.posts.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to posts_path, alert: "指定されたページは閲覧できません。"
     end
 
     # Only allow a list of trusted parameters through.
