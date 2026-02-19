@@ -21,14 +21,6 @@
     </style>
   </head>
 
-  <footer class="mt-20 py-10 border-t border-gray-200 text-center text-sm text-gray-500">
-    <div class="flex justify-center gap-6 mb-4">
-      <%= link_to "利用規約", static_pages_terms_path, class: "hover:underline" %>
-      <%= link_to "プライバシーポリシー", static_pages_privacy_path, class: "hover:underline" %>
-    </div>
-    <p>&copy; 2026 MyDiscogsApp</p>
-  </footer>
-
   <body>
     <nav>
     <% if user_signed_in? %>
@@ -49,4 +41,12 @@
       <%= yield %>
     </main>
   </body>
+
+  <footer class="mt-20 py-10 border-t border-gray-200 text-center text-sm text-gray-500">
+    <div class="flex justify-center gap-6 mb-4">
+      <%= link_to "利用規約", static_pages_terms_path, class: "hover:underline" %>
+      <%= link_to "プライバシーポリシー", static_pages_privacy_path, class: "hover:underline" %>
+    </div>
+    <p>&copy; 2026 MyDiscogsApp</p>
+  </footer>
 </html>
