@@ -1,4 +1,19 @@
 ja:
   devise:
     failure:
+      not_found_in_database: "メールアドレスまたはパスワードが違います。"
+      invalid: "メールアドレスまたはパスワードが違います。"
+      last_attempt: "あと1回でアカウントがロックされます。"
+      not_approved: "アカウントがまだ承認されていません。"
+      no_from_email_in_context: "メールを送信できませんでした。設定を確認してください。"
+      timeout: "セッションがタイムアウトしました。もう一度ログインしてください。"
       unauthenticated: "ログインもしくはアカウント登録が必要です。"
+      unconfirmed: "メールアドレスの確認が完了していません。"
+    sessions:
+      signed_in: "ログインしました。"
+      signed_out: "ログアウトしました。"
+      already_signed_out: "既にログアウトしています。"
+    registrations:
+      signed_up: "アカウント登録が完了しました。"
+      updated: "アカウント情報を変更しました。"
+      destroyed: "アカウントを削除しました。またのご利用をお待ちしております。"
