@@ -1,0 +1,40 @@
+<div class="flex flex-col items-center justify-center min-h-[70vh] w-full">
+  <div class="w-full max-w-md bg-white p-8 border border-gray-200 rounded-xl shadow-md">
+    <h2 class="text-2xl font-bold text-center mb-8 text-gray-800">新規アカウント登録</h2>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%# エラーメッセージの表示 %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="mb-6 mt-4">
+        <%= f.label :email, "メールアドレス", class: "block mb-2 text-sm font-semibold text-gray-700" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email",
+            class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all" %>
+      </div>
+
+      <div class="mb-6">
+        <%= f.label :password, "パスワード", class: "block mb-2 text-sm font-semibold text-gray-700" %>
+        <% if @minimum_password_length %>
+          <span class="text-xs text-gray-500 font-normal">(<%= @minimum_password_length %> 文字以上)</span>
+        <% end %>
+        <%= f.password_field :password, autocomplete: "new-password",
+            class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all" %>
+      </div>
+
+      <div class="mb-8">
+        <%= f.label :password_confirmation, "パスワード（確認用）", class: "block mb-2 text-sm font-semibold text-gray-700" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password",
+            class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "アカウントを作成する",
+            class: "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-lg transition-colors cursor-pointer shadow-sm" %>
+      </div>
+    <% end %>
+
+    <div class="mt-8 pt-6 border-t border-gray-100 text-center text-sm space-y-2 text-gray-500">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>
