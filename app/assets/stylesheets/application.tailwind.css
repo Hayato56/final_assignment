@@ -1,1 +1,51 @@
 @import "tailwindcss";
+
+/* ── ページ全体のダーク背景 ── */
+body {
+  background-color: #09090b; /* zinc-950 */
+  color: #fafafa;
+}
+
+/* ── Kaminari ページネーション ── */
+.pagination {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pagination a,
+.pagination span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 10px;
+  background: #18181b; /* zinc-900 */
+  border: 1px solid #3f3f46; /* zinc-700 */
+  color: #a1a1aa; /* zinc-400 */
+  font-size: 0.8125rem;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.pagination a:hover {
+  background: #27272a; /* zinc-800 */
+  border-color: #f59e0b; /* amber-500 */
+  color: #fbbf24; /* amber-400 */
+}
+
+.pagination .current {
+  background: #f59e0b;
+  border-color: #f59e0b;
+  color: #000;
+  font-weight: 700;
+}
+
+.pagination .disabled {
+  opacity: 0.25;
+  cursor: default;
+  pointer-events: none;
+}
