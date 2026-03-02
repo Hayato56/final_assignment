@@ -28,7 +28,18 @@
       </div>
     <% end %>
 
-    <div class="mt-8 pt-6 border-t border-gray-100 text-center text-sm space-y-2">
+    <div class="mt-6">
+      <%= button_to user_line_omniauth_authorize_path,
+            data: { turbo: false },
+            class: "w-full flex items-center justify-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white font-bold py-2.5 rounded-lg transition-colors cursor-pointer shadow-sm" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+          <path d="M19.952 12.475C19.952 8.311 15.837 4.93 10.8 4.93S1.648 8.311 1.648 12.475c0 3.754 3.33 6.895 7.829 7.493.305.066.72.2.825.46.094.236.062.606.03.845l-.133.801c-.04.237-.186.927.812.506s5.388-3.172 7.352-5.43h-.001c1.358-1.487 2.59-3.346 2.59-5.675z"/>
+        </svg>
+        LINEでログイン
+      <% end %>
+    </div>
+
+    <div class="mt-6 pt-6 border-t border-gray-100 text-center text-sm space-y-2">
       <%= render "devise/shared/links" %>
     </div>
   </div>

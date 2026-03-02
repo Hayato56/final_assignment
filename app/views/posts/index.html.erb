@@ -1,75 +1,124 @@
-<div style="max-width: 1000px; margin: 40px auto; padding: 0 20px;">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-    <h1 style="font-size: 28px; font-weight: bold;">My Collection</h1>
-    <%= link_to "新しい盤を登録する", new_post_path, class: "btn-primary" %>
+<div class="main-container">
+  <%# ヘッダー部分：スマホでは中央寄せ・縦並び %>
+  <div class="header-section">
+    <h1 class="page-title">My Collection</h1>
+    <%= link_to "新しい盤を登録する", new_post_path, class: "btn-primary main-nav-btn" %>
   </div>
 
-  <%# 検索・絞り込みフォーム %>
-  <div style="margin-bottom: 30px; background: #fff; padding: 20px; border: 1px solid #e5e5e5; border-radius: 4px;">
-    <%= form_with url: posts_path, method: :get, local: true, style: "display: flex; gap: 15px; align-items: center;" do |f| %>
-      <div style="flex: 2;">
-        <%= f.text_field :search, value: params[:search], placeholder: "アーティスト名・タイトルで検索",
-            style: "padding: 10px; width: 100%; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" %>
+  <%# 検索・絞り込みフォーム：スマホでは入力欄を縦に並べる %>
+  <div class="search-box">
+    <%= form_with url: posts_path, method: :get, local: true, class: "search-form" do |f| %>
+      <div class="search-field">
+        <%= f.text_field :search, value: params[:search], placeholder: "アーティスト・タイトル検索", class: "input-base" %>
       </div>
-      <div style="flex: 1;">
-        <%= f.select :genre, Post::GENRES, { include_blank: "すべてのジャンル", selected: params[:genre] },
-            { style: "padding: 10px; width: 100%; border: 1px solid #ccc; border-radius: 4px; background: white;" } %>
+      <div class="select-field">
+        <%= f.select :genre, Post::GENRES, { include_blank: "すべてのジャンル", selected: params[:genre] }, { class: "input-base select-bg" } %>
       </div>
-      <%= f.submit "検索", style: "padding: 10px 20px; cursor: pointer; background: #333; color: white; border: none; border-radius: 4px; font-weight: bold;" %>
-      <% if params[:search].present? || params[:genre].present? %>
-        <%= link_to "リセット", posts_path, style: "font-size: 12px; color: #666; text-decoration: none;" %>
-      <% end %>
+      <div class="search-actions">
+        <%= f.submit "検索", class: "submit-btn" %>
+        <% if params[:search].present? || params[:genre].present? %>
+          <%= link_to "リセット", posts_path, class: "reset-link" %>
+        <% end %>
+      </div>
     <% end %>
   </div>
 
-  <%# データがある場合のみグリッドを表示 %>
   <% if @posts.any? %>
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px;">
+    <div class="record-grid">
       <% @posts.each do |post| %>
         <div class="record-card">
-          <%= link_to post, style: "text-decoration: none; color: inherit;" do %>
+          <%= link_to post, class: "card-link" do %>
             <div class="image-container">
               <% if post.image.attached? %>
-                <%= image_tag post.image %>
+                <%= image_tag post.image, class: "record-img" %>
               <% else %>
-                <span style="color: #999; font-size: 12px;">No Image</span>
+                <span class="no-image">No Image</span>
               <% end %>
             </div>
             <div class="card-info">
               <span class="record-title"><%= post.title %></span>
-              <span class="record-artist text-gray-600"><%= post.artist %></span>
+              <span class="record-artist"><%= post.artist %></span>
               <% if post.genre.present? %>
-                <span style="display: inline-block; margin-top: 5px; font-size: 10px; background: #eee; padding: 2px 6px; border-radius: 10px; color: #666;">
-                  <%= post.genre %>
-                </span>
+                <span class="genre-badge"><%= post.genre %></span>
               <% end %>
             </div>
           <% end %>
-          <div style="padding: 0 12px 12px; display: flex; gap: 10px; font-size: 11px;">
-            <%= link_to "編集", edit_post_path(post), style: "color: #007bff; text-decoration: none;" %>
+          <div class="card-actions">
+            <%= link_to "編集", edit_post_path(post), class: "edit-link" %>
             <%= button_to "削除", post,
-              method: :delete,
-              data: { turbo_confirm: t('common.confirm_delete') },
-              style: "background: none; border: none; color: #dc3545; cursor: pointer; padding: 0; font-size: 11px;" %>
+                  method: :delete,
+                  data: { turbo_confirm: t('common.confirm_delete') },
+                  class: "delete-btn" %>
           </div>
         </div>
       <% end %>
     </div>
   <% else %>
-    <%# --- 空の状態のケア (Empty State) --- %>
-    <div style="text-align: center; padding: 100px 20px; background: #fff; border: 1px dashed #ccc; border-radius: 8px;">
-      <div style="font-size: 48px; margin-bottom: 20px;">💿</div>
-      <h2 style="font-size: 20px; color: #333; margin-bottom: 10px;">
+    <%# --- 空の状態 (Empty State) --- %>
+    <div class="empty-state">
+      <div class="empty-icon">💿</div>
+      <h2 class="empty-title">
         <%= params[:search].present? || params[:genre].present? ? "条件に合う盤が見つかりませんでした" : "コレクションがまだありません" %>
       </h2>
-      <p style="color: #666; margin-bottom: 30px;">
-        お気に入りのレコードを登録して、自分だけのデータベースを作りましょう。
-      </p>
+      <p class="empty-text">お気に入りのレコードを登録して、自分だけのデータベースを作りましょう。</p>
       <%= link_to "最初の1枚を登録する", new_post_path, class: "btn-primary", style: "padding: 12px 30px;" %>
     </div>
   <% end %>
 
-  <div style="margin-top: 40px;">
+  <div class="pagination-container">
     <%= paginate @posts %>
   </div>
 </div>
+
+<style>
+  .main-container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+  .header-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+  .page-title { font-size: 28px; font-weight: bold; margin: 0; }
+
+  /* 検索フォーム
+  .search-box { margin-bottom: 30px; background: #fff; padding: 20px; border: 1px solid #e5e5e5; border-radius: 4px; }
+  .search-form { display: flex; gap: 15px; align-items: center; }
+  .search-field { flex: 2; }
+  .select-field { flex: 1; }
+  .input-base { padding: 10px; width: 100%; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
+  .select-bg { background: white; }
+  .search-actions { display: flex; align-items: center; gap: 10px; }
+  .submit-btn { padding: 10px 20px; cursor: pointer; background: #333; color: white; border: none; border-radius: 4px; font-weight: bold; }
+  .reset-link { font-size: 12px; color: #666; text-decoration: none; white-space: nowrap; }
+
+  /* グリッドとカード
+  .record-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
+  .record-card { background: white; border: 1px solid #eee; border-radius: 8px; overflow: hidden; transition: transform 0.2s; }
+  .record-card:hover { transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+  .card-link { text-decoration: none; color: inherit; }
+  .image-container { width: 100%; aspect-ratio: 1/1; background: #f8f8f8; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .record-img { width: 100%; height: 100%; object-fit: cover; }
+  .no-image { color: #999; font-size: 12px; }
+  .card-info { padding: 12px; }
+  .record-title { display: block; font-weight: bold; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .record-artist { display: block; font-size: 12px; color: #666; margin-top: 2px; }
+  .genre-badge { display: inline-block; margin-top: 8px; font-size: 10px; background: #eee; padding: 2px 8px; border-radius: 12px; color: #666; }
+  .card-actions { padding: 0 12px 12px; display: flex; gap: 12px; font-size: 11px; }
+  .edit-link { color: #007bff; text-decoration: none; }
+  .delete-btn { background: none; border: none; color: #dc3545; cursor: pointer; padding: 0; font-size: 11px; }
+
+  /* 空の状態
+  .empty-state { text-align: center; padding: 80px 20px; background: #fff; border: 1px dashed #ccc; border-radius: 8px; }
+  .empty-icon { font-size: 48px; margin-bottom: 20px; }
+  .empty-title { font-size: 20px; color: #333; margin-bottom: 10px; }
+  .empty-text { color: #666; margin-bottom: 30px; }
+
+  .pagination-container { margin-top: 40px; }
+
+  /* --- レスポンシブ対応 (スマホ用)
+  @media (max-width: 640px) {
+    .header-section { flex-direction: column; gap: 15px; text-align: center; }
+    .search-form { flex-direction: column; gap: 10px; }
+    .search-field, .select-field, .search-actions { width: 100%; }
+    .submit-btn { width: 100%; padding: 12px; }
+    .record-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .main-container { margin: 20px auto; }
+    .record-title { font-size: 13px; }
+    .card-info { padding: 8px; }
+  }
+</style>
