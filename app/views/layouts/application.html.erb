@@ -1,40 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <title>MyDiscogsApp</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", media: "all" %>
   </head>
 
-  <body>
-    <nav>
-    <% if user_signed_in? %>
-      <%# ログインしている時 %>
-      <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete } %>
-    <% else %>
-      <%= link_to "新規登録", new_user_registration_path %> |
-      <%= link_to "ログイン", new_user_session_path %>
-    <% end %>
-  </nav>
+  <body class="bg-[#121212] text-[#E5E5E5] min-h-screen flex flex-col">
+
+    <%# ── ヘッダー（固定・透過ブラー） ── %>
+    <header class="sticky top-0 z-50 bg-black/70 backdrop-blur-md border-b border-white/10">
+      <nav class="container mx-auto px-5 py-4 flex items-center justify-between">
+        <%= link_to "MyDiscogsApp", root_path, class: "site-title text-xl font-semibold text-[#E5E5E5] tracking-widest" %>
+        <div class="flex items-center gap-4 text-sm">
+          <% if user_signed_in? %>
+            <%= link_to "ログアウト", destroy_user_session_path,
+                data: { turbo_method: :delete },
+                class: "text-[#E5E5E5]/70 hover:text-[#FF9F0D] transition-colors duration-200" %>
+          <% else %>
+            <%= link_to "新規登録", new_user_registration_path,
+                class: "btn-glow px-4 py-1.5 rounded" %>
+            <%= link_to "ログイン", new_user_session_path,
+                class: "text-[#E5E5E5]/70 hover:text-[#FF9F0D] transition-colors duration-200" %>
+          <% end %>
+        </div>
+      </nav>
+    </header>
+
+    <%# ── フラッシュメッセージ ── %>
     <% if notice %>
-      <p class="notice p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50"><%= notice %></p>
+      <p class="px-5 py-3 text-sm text-emerald-300 bg-emerald-900/40 border-b border-emerald-700/50 text-center"><%= notice %></p>
     <% end %>
     <% if alert %>
-      <p class="alert p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50"><%= alert %></p>
+      <p class="px-5 py-3 text-sm text-red-300 bg-red-900/40 border-b border-red-700/50 text-center"><%= alert %></p>
     <% end %>
-    <main class="container mx-auto mt-28 px-5 flex">
+
+    <main class="container mx-auto mt-10 px-5 flex-1">
       <%= yield %>
     </main>
-  </body>
 
-  <footer class="mt-20 py-10 border-t border-gray-200 text-center text-sm text-gray-500">
-    <div class="flex justify-center gap-6 mb-4">
-      <%= link_to "利用規約", static_pages_terms_path, class: "hover:underline" %>
-      <%= link_to "プライバシーポリシー", static_pages_privacy_path, class: "hover:underline" %>
-    </div>
-    <p>&copy; 2026 MyDiscogsApp</p>
-  </footer>
+    <footer class="mt-20 py-10 border-t border-white/10 text-center text-sm text-[#E5E5E5]/40">
+      <div class="flex justify-center gap-6 mb-4">
+        <%= link_to "利用規約", static_pages_terms_path, class: "hover:text-[#FF9F0D] transition-colors duration-200" %>
+        <%= link_to "プライバシーポリシー", static_pages_privacy_path, class: "hover:text-[#FF9F0D] transition-colors duration-200" %>
+      </div>
+      <p>&copy; 2026 MyDiscogsApp</p>
+    </footer>
+
+  </body>
 </html>

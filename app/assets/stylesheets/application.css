@@ -1,8 +1,6 @@
-/* ベースの背景色をDiscogs風に */
+/* ベースカラーは application.tailwind.css で統一管理 */
 body {
-    background-color: #f2f2f2;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #333;
 }
 
 /* カードのスタイル */
