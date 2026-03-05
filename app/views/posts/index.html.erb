@@ -35,11 +35,11 @@
   <% if @posts.any? %>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
       <% @posts.each do |post| %>
-        <div class="group bg-zinc-900 border border-zinc-800 overflow-hidden hover:border-amber-500/40 hover:-translate-y-1 transition-all duration-200 hover:shadow-[0_8px_32px_rgba(245,158,11,0.12)]">
+        <div class="group bg-zinc-900 border border-zinc-800 overflow-hidden hover:-translate-y-1 transition-all duration-300 ease-out hover:shadow-[0_0_32px_rgba(245,158,11,0.4),0_8px_24px_rgba(245,158,11,0.2)]">
           <%= link_to post, class: "block" do %>
             <div class="aspect-square bg-zinc-800 overflow-hidden relative">
               <% if post.image.attached? %>
-                <%= image_tag post.image, class: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" %>
+                <%= image_tag post.image, class: "w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out" %>
               <% else %>
                 <div class="w-full h-full flex items-center justify-center">
                   <div class="text-center">
